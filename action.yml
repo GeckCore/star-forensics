@@ -1,0 +1,72 @@
+name: Star Forensics Analysis
+description: Automatically analyze your repository's star patterns and generate a trust score
+
+inputs:
+  github-token:
+    description: 'GitHub token for API access'
+    required: false
+    default: ${{ github.token }}
+  max-stars:
+    description: 'Maximum number of stargazers to analyze'
+    required: false
+    default: '1000'
+  fail-below:
+    description: 'Fail the workflow if trust score drops below this value (0 to disable)'
+    required: false
+    default: '0'
+  output-format:
+    description: 'Output format: text, json, or html'
+    required: false
+    default: 'json'
+
+outputs:
+  trust-score:
+    description: 'Trust score (0-100)'
+    value: ${{ steps.analyze.outputs.trust-score }}
+  verdict:
+    description: 'Verdict string'
+    value: ${{ steps.analyze.outputs.verdict }}
+  grade:
+    description: 'Grade (A-F)'
+    value: ${{ steps.analyze.outputs.grade }}
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Install star-forensics
+      shell: bash
+      run: pip install star-forensics --quiet
+
+    - name: Run analysis
+      id: analyze
+      shell: bash
+      env:
+        GITHUB_TOKEN: ${{ inputs.github-token }}
+      run: |
+        REPO="${{ github.repository }}"
+        RESULT=$(star-forensics analyze "$REPO" \
+          --max-stars ${{ inputs.max-stars }} \
+          --output json \
+          --no-banner)
+
+        SCORE=$(echo "$RESULT" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d['trust_score']['score'])")
+        VERDICT=$(echo "$RESULT" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d['trust_score']['verdict'])")
+        GRADE=$(echo "$RESULT" | python3 -c "import sys,json; d=json.load(sys.stdin); print(d['trust_score']['grade'])")
+
+        echo "trust-score=$SCORE" >> $GITHUB_OUTPUT
+        echo "verdict=$VERDICT" >> $GITHUB_OUTPUT
+        echo "grade=$GRADE" >> $GITHUB_OUTPUT
+
+        echo "### 🕵️ Star Forensics" >> $GITHUB_STEP_SUMMARY
+        echo "**Trust Score**: $SCORE/100 (Grade: $GRADE)" >> $GITHUB_STEP_SUMMARY
+        echo "**Verdict**: $VERDICT" >> $GITHUB_STEP_SUMMARY
+
+        THRESHOLD=${{ inputs.fail-below }}
+        if [ "$THRESHOLD" -gt "0" ] && [ "$SCORE" -lt "$THRESHOLD" ]; then
+          echo "::error::Trust score $SCORE is below threshold $THRESHOLD"
+          exit 1
+        fi
+
+branding:
+  icon: 'search'
+  color: 'blue'
