@@ -48,7 +48,7 @@ Python is the programming language this tool runs on. Think of it as the engine.
 2. Paste this and press Enter:
    ```bash
    brew install python
-````
+
 
 If you get an error, first install Homebrew by going to [brew.sh](https://brew.sh) and following their one-line install command. Then try again.
 
