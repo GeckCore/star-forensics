@@ -6,13 +6,13 @@
 
 [![PyPI](https://img.shields.io/pypi/v/star-forensics?color=blue&style=flat-square)](https://pypi.org/project/star-forensics/)
 [![Python](https://img.shields.io/pypi/pyversions/star-forensics?style=flat-square)](https://pypi.org/project/star-forensics/)
-[![CI](https://img.shields.io/github/actions/workflow/status/star-forensics/star-forensics/ci.yml?style=flat-square)](https://github.com/star-forensics/star-forensics/actions)
+[![CI](https://img.shields.io/github/actions/workflow/status/GeckCore/star-forensics/ci.yml?style=flat-square)](https://github.com/GeckCore/star-forensics/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
-[![Stars](https://img.shields.io/github/stars/star-forensics/star-forensics?style=flat-square&color=yellow)](https://github.com/star-forensics/star-forensics/stargazers)
+[![Stars](https://img.shields.io/github/stars/GeckCore/star-forensics?style=flat-square&color=yellow)](https://github.com/GeckCore/star-forensics/stargazers)
 
 *Buying GitHub stars is more common than you think.*
 
-[**Quick Start**](#-quick-start) · [**How It Works**](#-how-it-works) · [**Patterns**](#-detection-patterns) · [**FAQ**](#-faq) · [**Contributing**](#-contributing)
+[**🚀 Complete beginner? Start here**](#-complete-installation-guide-no-experience-needed) · [**Quick Start**](#-quick-start) · [**How It Works**](#-how-it-works) · [**Patterns**](#-detection-patterns) · [**FAQ**](#-faq) · [**Contributing**](#-contributing)
 
 </div>
 
@@ -27,6 +27,136 @@ And a growing industry sells them.
 Services like `buygithubstars.com` (yes, really) offer 1,000 stars for $50–$150. The accounts are either purchased, farmed, or created in bulk. The patterns are detectable — if you know what to look for.
 
 **star-forensics** knows what to look for.
+
+---
+
+## 🚀 Complete Installation Guide (No Experience Needed)
+
+> **Never used a terminal before? Never installed Python?** This section is for you. Follow every step and you'll be analyzing repos in under 5 minutes.
+
+### Step 1 — Install Python
+
+Python is the programming language this tool runs on. Think of it as the engine. You need to install it once, and it's free.
+
+**On Windows:**
+1. Go to [python.org/downloads](https://www.python.org/downloads/)
+2. Click the big yellow **"Download Python"** button
+3. Run the downloaded file
+4. ⚠️ **CRITICAL:** On the first screen of the installer, check the box that says **"Add Python to PATH"** before clicking Install. If you miss this, nothing will work and you'll have to reinstall.
+
+**On Mac:**
+1. Open **Terminal** (press `Cmd + Space`, type `Terminal`, press Enter)
+2. Paste this and press Enter:
+   ```
+   brew install python
+   ```
+   If you get an error, first install Homebrew by going to [brew.sh](https://brew.sh) and following their one-line install command. Then try again.
+
+**On Linux (Ubuntu/Debian):**
+```bash
+sudo apt install python3 python3-pip
+```
+
+**How to verify it worked:** Open a terminal and type:
+```
+python --version
+```
+You should see something like `Python 3.11.4`. Any version `3.9` or higher is fine.
+
+---
+
+### Step 2 — Open a Terminal
+
+A terminal is a text window where you type commands. It sounds scary but you'll only need to type two things total.
+
+| System | How to open it |
+|---|---|
+| **Windows** | Press `Win + R`, type `cmd`, press Enter. Or search "Command Prompt" in the Start menu. |
+| **Mac** | Press `Cmd + Space`, type `Terminal`, press Enter. |
+| **Linux** | `Ctrl + Alt + T` on most distros. |
+
+---
+
+### Step 3 — Install star-forensics
+
+In your terminal, type this and press Enter:
+
+```
+pip install star-forensics
+```
+
+Text will scroll by. That's normal. Wait until your cursor appears again (usually under 30 seconds). Done.
+
+**If you get an error saying `pip` is not found**, try:
+```
+pip3 install star-forensics
+```
+
+---
+
+### Step 4 — Analyze your first repo
+
+Now type this in your terminal:
+
+```
+star-forensics analyze owner/repo
+```
+
+Replace `owner/repo` with any GitHub repository. The format is always the two words at the end of a GitHub URL separated by a slash.
+
+**Examples:**
+```bash
+star-forensics analyze microsoft/vscode
+star-forensics analyze facebook/react
+star-forensics analyze torvalds/linux
+```
+
+You'll see a score and detailed breakdown appear in your terminal. That's it — you're done.
+
+---
+
+### Step 5 (Recommended) — Get a GitHub Token for Faster Analysis
+
+Without a token, the tool is limited to analyzing about 60 accounts per hour by GitHub's rules. With a free token, that jumps to 5,000. For repos with thousands of stars, this makes a big difference in speed.
+
+**How to get a free token (takes 2 minutes):**
+1. Go to [github.com/settings/tokens](https://github.com/settings/tokens) (you need a free GitHub account)
+2. Click **"Generate new token (classic)"**
+3. Give it any name, e.g. `star-forensics`
+4. You don't need to check any permission boxes — leave them all unchecked
+5. Scroll down and click **"Generate token"**
+6. Copy the long string that starts with `ghp_`
+
+**Use the token:**
+```bash
+star-forensics analyze owner/repo --token ghp_paste_your_token_here
+```
+
+**Or set it once so you never have to type it again:**
+
+Windows (Command Prompt):
+```
+set GITHUB_TOKEN=ghp_paste_your_token_here
+```
+
+Mac/Linux (Terminal):
+```
+export GITHUB_TOKEN=ghp_paste_your_token_here
+```
+
+After doing this, you can just run `star-forensics analyze owner/repo` and the token will be used automatically for the rest of that terminal session.
+
+---
+
+### 🆘 Troubleshooting
+
+| Error | Fix |
+|---|---|
+| `star-forensics is not recognized` | Close and reopen your terminal. If it still fails, try `python -m starforensics analyze owner/repo` |
+| `pip is not recognized` | Reinstall Python and check "Add to PATH" (Windows). On Mac/Linux, try `pip3` instead of `pip`. |
+| `Rate limit exceeded` | You've hit GitHub's hourly cap. Add a token following Step 5 above. |
+| Tool runs but shows nothing | The repo might have 0 stars. Try with a popular repo first: `star-forensics analyze microsoft/vscode` |
+| Any other error | Open an issue at [github.com/GeckCore/star-forensics/issues](https://github.com/GeckCore/star-forensics/issues) with your OS and the exact error text. |
 
 ---
 
@@ -49,7 +179,7 @@ star-forensics analyze owner/repo --output html --out-file report.html
 star-forensics analyze owner/repo --max-stars 3000
 ```
 
-> **No installation?** Run it directly:
+> **No installation?** Run it directly with pipx:
 > ```bash
 > pipx run star-forensics analyze owner/repo
 > ```
@@ -207,7 +337,7 @@ Social proof. Stars influence trending algorithms, appear in Google searches, af
 We don't maintain a public list — that's not the goal. The goal is to give everyone a tool to investigate for themselves.
 
 **Can I trust your own star count?**
-Yes. You can run `star-forensics analyze star-forensics/star-forensics` anytime to verify. We welcome transparency.
+Yes. You can run `star-forensics analyze GeckCore/star-forensics` anytime to verify. We welcome transparency.
 
 **Does GitHub do anything about this?**
 GitHub removes accounts that violate their ToS, but bulk-star services adapt faster than enforcement can react.
@@ -230,7 +360,7 @@ Contributions are very welcome! Here's what we need most:
 - **False positive reports** — If a legitimate repo scores poorly, tell us why.
 
 ```bash
-git clone https://github.com/star-forensics/star-forensics
+git clone https://github.com/GeckCore/star-forensics
 cd star-forensics
 pip install -e ".[dev]"
 pytest tests/ -v
