@@ -1,0 +1,18 @@
+name: Star Forensics
+
+on:
+  schedule:
+    - cron: '0 9 * * 1'  # Every Monday at 9am UTC
+  workflow_dispatch:      # Allow manual runs
+
+jobs:
+  analyze:
+    name: Analyze star patterns
+    runs-on: ubuntu-latest
+    steps:
+      - uses: star-forensics/star-forensics@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          max-stars: 1000
+          # Optionally fail if score drops below a threshold:
+          # fail-below: 60
