@@ -1,4 +1,3 @@
-````markdown
 # 🕵️ star-forensics
 
 <div align="center">
