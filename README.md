@@ -5,7 +5,6 @@
 **Detect fake GitHub stars with forensic analysis.**
 
 [![Python](https://img.shields.io/badge/python-3.9+-blue.svg?style=flat-square)](https://www.python.org/downloads/)
-[![CI](https://img.shields.io/github/actions/workflow/status/GeckCore/star-forensics/ci.yml?style=flat-square)](https://github.com/GeckCore/star-forensics/actions)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
 [![Stars](https://img.shields.io/github/stars/GeckCore/star-forensics?style=flat-square&color=yellow)](https://github.com/GeckCore/star-forensics/stargazers)
 
