@@ -365,7 +365,4 @@ Made with 🔬 by the open source community
 
 *If this helped you, consider starring the repo — we'll know if you don't mean it.* 😏
 
-\</div\>
 
-```
-```
