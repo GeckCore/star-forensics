@@ -366,7 +366,7 @@ pip install -e ".[dev]"
 pytest tests/ -v
 ```
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for the full guide.
+See [CONTRIBUTING.md]([CONTRIBUTING.md](https://github.com/GeckCore/star-forensics/blob/main/blob/main/CONTRIBUTING.md)) for the full guide.
 
 ---
 
